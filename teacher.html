@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teacher Profile</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .profile-container { max-width: 900px; margin: 2rem auto; padding: 1.5rem; background:#fff; border-radius:8px; box-shadow:0 6px 18px rgba(0,0,0,0.05);} 
+        .profile-header { display:flex; gap:1rem; align-items:center; }
+        .profile-avatar { width:90px; height:90px; border-radius:50%; background:linear-gradient(135deg,#667eea,#764ba2); display:flex; align-items:center; justify-content:center; color:white; font-size:2rem; }
+        .profile-title h2 { margin:0; }
+        .profile-actions { margin-left:auto; }
+        .profile-grid { display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin-top:1rem; }
+        .profile-card { background:#fafafa; padding:1rem; border-radius:6px; }
+        .back-btn { margin-bottom:1rem; }
+        @media (max-width:700px) { .profile-grid { grid-template-columns:1fr; } }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <main class="main-content">
+            <div class="profile-container" id="teacher-profile">
+                <button class="btn back-btn" onclick="goBack()"><i class="fas fa-arrow-left"></i> Back</button>
+                <div class="profile-header">
+                    <div class="profile-avatar" id="avatar">T</div>
+                    <div class="profile-title">
+                        <h2 id="t-name">Teacher Name</h2>
+                        <div id="t-designation" style="color:#6c757d;">Designation</div>
+                        <div style="margin-top:0.5rem;color:#6c757d;">Employee ID: <span id="t-id"></span></div>
+                    </div>
+                    <div class="profile-actions">
+                        <button class="btn btn-primary" id="print-btn" onclick="window.print()"><i class="fas fa-print"></i> Print</button>
+                    </div>
+                </div>
+
+                <div class="profile-grid">
+                    <div class="profile-card">
+                        <h4>Contact</h4>
+                        <p><strong>Email:</strong> <span id="t-email"></span></p>
+                        <p><strong>Phone:</strong> <span id="t-phone"></span></p>
+                        <p><strong>Emergency Contact:</strong> <span id="t-emergency"></span></p>
+                        <p><strong>Address:</strong> <span id="t-address"></span></p>
+                    </div>
+
+                    <div class="profile-card">
+                        <h4>Employment</h4>
+                        <p><strong>Designation:</strong> <span id="t-designation-2"></span></p>
+                        <p><strong>Joining Date:</strong> <span id="t-joining"></span></p>
+                        <p><strong>Status:</strong> <span id="t-status"></span></p>
+                        <p><strong>Salary:</strong> <span id="t-salary"></span></p>
+                    </div>
+
+                    <div class="profile-card">
+                        <h4>Academic</h4>
+                        <p><strong>Primary Subject:</strong> <span id="t-subject"></span></p>
+                        <p><strong>Qualification:</strong> <span id="t-qualification"></span></p>
+                        <p><strong>Experience:</strong> <span id="t-experience"></span></p>
+                    </div>
+
+                    <div class="profile-card">
+                        <h4>Assigned Classes</h4>
+                        <p id="t-classes"></p>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+    </div>
+
+    <script>
+        function qs(name) {
+            const params = new URLSearchParams(window.location.search);
+            return params.get(name);
+        }
+        function formatDate(dateString) {
+            if (!dateString) return '—';
+            const d = new Date(dateString);
+            return d.toLocaleDateString('en-US', { year:'numeric', month:'long', day:'numeric' });
+        }
+        function goBack() {
+            // Always return to the Teachers module in the main app
+            // Use query parameter so the app opens the Teachers module
+            window.location.href = 'index.html?module=teachers';
+        }
+
+        (function renderTeacher(){
+            const id = qs('id');
+            if (!id) { document.getElementById('teacher-profile').innerHTML = '<p>No teacher id provided.</p>'; return; }
+            let teachers = [];
+            try { teachers = JSON.parse(localStorage.getItem('teachers') || '[]'); } catch(e) { teachers = []; }
+            const teacher = teachers.find(t => t.id === id);
+            if (!teacher) { document.getElementById('teacher-profile').innerHTML = '<p>Teacher not found.</p>'; return; }
+
+            document.getElementById('t-name').textContent = teacher.name || '\u2014';
+            document.getElementById('t-id').textContent = teacher.id || '\u2014';
+            document.getElementById('avatar').textContent = (teacher.name || 'T').split(' ').map(s=>s[0]).slice(0,2).join('').toUpperCase();
+            document.getElementById('t-designation').textContent = teacher.designation || 'Teacher';
+            document.getElementById('t-designation-2').textContent = teacher.designation || 'Teacher';
+            document.getElementById('t-email').textContent = teacher.email || '\u2014';
+            document.getElementById('t-phone').textContent = teacher.phone || '\u2014';
+            document.getElementById('t-emergency').textContent = teacher.emergencyContact || '\u2014';
+            document.getElementById('t-address').textContent = teacher.address || '\u2014';
+            document.getElementById('t-joining').textContent = teacher.joiningDate ? formatDate(teacher.joiningDate) : (teacher.createdAt ? formatDate(teacher.createdAt) : '\u2014');
+            document.getElementById('t-status').textContent = teacher.status || '\u2014';
+            document.getElementById('t-salary').textContent = teacher.salary ? '₹' + Number(teacher.salary).toLocaleString() : '\u2014';
+            document.getElementById('t-subject').textContent = teacher.subject || '\u2014';
+            document.getElementById('t-qualification').textContent = teacher.qualification || '\u2014';
+            document.getElementById('t-experience').textContent = teacher.experience != null ? teacher.experience + ' years' : '\u2014';
+            const classes = Array.isArray(teacher.assignedClasses) ? teacher.assignedClasses : [];
+            document.getElementById('t-classes').textContent = classes.length > 0 ? classes.join(', ') : 'No classes assigned';
+        })();
+    </script>
+</body>
+</html>

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Class Profile</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .profile-container { max-width: 900px; margin: 2rem auto; padding: 1.5rem; background:#fff; border-radius:8px; box-shadow:0 6px 18px rgba(0,0,0,0.05);} 
+        .profile-header { display:flex; gap:1rem; align-items:center; }
+        .profile-avatar { width:90px; height:90px; border-radius:8px; background:linear-gradient(135deg,#667eea,#764ba2); display:flex; align-items:center; justify-content:center; color:white; font-size:2rem; }
+        .profile-title h2 { margin:0; }
+        .profile-actions { margin-left:auto; }
+        .profile-grid { display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin-top:1rem; }
+        .profile-card { background:#fafafa; padding:1rem; border-radius:6px; }
+        .back-btn { margin-bottom:1rem; }
+    .students-list { margin-top:1rem; }
+    .student-item { padding:0.5rem 0; border-bottom:1px solid #e9ecef; display:flex; justify-content:space-between; }
+    .student-link { color: inherit; text-decoration: none; font-weight: 600; }
+    .student-link small { color: #6c757d; font-weight: normal; }
+    .student-link:hover { text-decoration: underline; }
+        @media (max-width:700px) { .profile-grid { grid-template-columns:1fr; } }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <main class="main-content">
+            <div class="profile-container" id="class-profile">
+                <button class="btn back-btn" onclick="goBack()"><i class="fas fa-arrow-left"></i> Back</button>
+                <div class="profile-header">
+                    <div class="profile-avatar" id="avatar">C</div>
+                    <div class="profile-title">
+                        <h2 id="c-name">Class Name</h2>
+                        <div id="c-section" style="color:#6c757d;">Section</div>
+                        <div style="margin-top:0.5rem;color:#6c757d;">Class ID: <span id="c-id"></span></div>
+                    </div>
+                    <div class="profile-actions">
+                        <button class="btn btn-primary" id="print-btn" onclick="window.print()"><i class="fas fa-print"></i> Print</button>
+                    </div>
+                </div>
+
+                <div class="profile-grid">
+                    <div class="profile-card">
+                        <h4>Class Info</h4>
+                        <p><strong>Teacher:</strong> <span id="c-teacher"></span></p>
+                        <p><strong>Room:</strong> <span id="c-room"></span></p>
+                        <p><strong>Floor:</strong> <span id="c-floor"></span></p>
+                        <p><strong>Timing:</strong> <span id="c-time"></span></p>
+                        <p><strong>Max Strength:</strong> <span id="c-max"></span></p>
+                        <p><strong>Current Students:</strong> <span id="c-current"></span></p>
+                    </div>
+
+                    <div class="profile-card">
+                        <h4>Subjects</h4>
+                        <p id="c-subjects"></p>
+                        <h4 style="margin-top:1rem;">Description</h4>
+                        <p id="c-desc"></p>
+                    </div>
+                </div>
+
+                <div class="profile-card students-list" id="students-list-card">
+                    <h4>Enrolled Students</h4>
+                    <div id="students-list"></div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        function qs(name) {
+            const params = new URLSearchParams(window.location.search);
+            return params.get(name);
+        }
+        function formatDate(dateString) {
+            if (!dateString) return '—';
+            const d = new Date(dateString);
+            return d.toLocaleDateString('en-US', { year:'numeric', month:'long', day:'numeric' });
+        }
+        function goBack() {
+            window.location.href = 'index.html?module=classes';
+        }
+
+        (function renderClass(){
+            const id = qs('id');
+            if (!id) { document.getElementById('class-profile').innerHTML = '<p>No class id provided.</p>'; return; }
+            let classes = [];
+            let students = [];
+            try { classes = JSON.parse(localStorage.getItem('classes') || '[]'); } catch(e) { classes = []; }
+            try { students = JSON.parse(localStorage.getItem('students') || '[]'); } catch(e) { students = []; }
+            const classData = classes.find(c => c.id === id || `${c.name}${c.section}` === id);
+            if (!classData) { document.getElementById('class-profile').innerHTML = '<p>Class not found.</p>'; return; }
+
+            document.getElementById('c-name').textContent = classData.name || '\u2014';
+            document.getElementById('c-section').textContent = classData.section ? 'Section: ' + classData.section : '';
+            document.getElementById('c-id').textContent = classData.id || '\u2014';
+            document.getElementById('avatar').textContent = (classData.name || 'C').substring(0,2).toUpperCase();
+            document.getElementById('c-teacher').textContent = classData.teacherName || '\u2014';
+            document.getElementById('c-room').textContent = classData.room || '\u2014';
+            document.getElementById('c-floor').textContent = classData.floor || '\u2014';
+            document.getElementById('c-time').textContent = `${classData.startTime || '\u2014'} - ${classData.endTime || '\u2014'}`;
+            document.getElementById('c-max').textContent = classData.maxStrength || '\u2014';
+
+            const enrolled = students.filter(s => s.class === classData.name && (classData.section ? s.section === classData.section : true));
+            document.getElementById('c-current').textContent = enrolled.length;
+            document.getElementById('c-subjects').textContent = classData.subjects && classData.subjects.length ? classData.subjects.join(', ') : 'No subjects assigned';
+            document.getElementById('c-desc').textContent = classData.description || '\u2014';
+
+            const list = document.getElementById('students-list');
+            list.innerHTML = '';
+            if (enrolled.length === 0) {
+                list.innerHTML = '<div style="padding:1rem;color:#6c757d;">No students enrolled in this class.</div>';
+            } else {
+                enrolled.forEach(s => {
+                    const div = document.createElement('div');
+                    div.className = 'student-item';
+                    const studentId = encodeURIComponent(s.id || s.roll || s.name);
+                    div.innerHTML = `<div><a class="student-link" href="student.html?id=${studentId}">${s.name} <small>(Roll: ${s.roll || s.id})</small></a></div><div>${s.parentName ? s.parentName : ''}</div>`;
+                    list.appendChild(div);
+                });
+            }
+        })();
+n    </script>
+</body>
+</html>

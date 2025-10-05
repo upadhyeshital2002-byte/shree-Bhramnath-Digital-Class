@@ -1,0 +1,1540 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bhramnath Digital Class - School Management System</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <div class="logo">
+                    <!-- <i class="fas fa-graduation-cap"></i> -->
+                    <h1>Bhramnath Digital Class</h1>
+                </div>
+                <nav class="main-nav">
+                    <ul>
+                        <li><a href="#" class="nav-link active" data-module="dashboard"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                        <li><a href="#" class="nav-link" data-module="students"><i class="fas fa-user-graduate"></i> Students</a></li>
+                        <li><a href="#" class="nav-link" data-module="classes"><i class="fas fa-chalkboard-teacher"></i> Classes</a></li>
+                        <li><a href="#" class="nav-link" data-module="attendance"><i class="fas fa-calendar-check"></i> Attendance</a></li>
+                        <li><a href="#" class="nav-link" data-module="exams"><i class="fas fa-file-alt"></i> Exams</a></li>
+                        <li><a href="#" class="nav-link" data-module="fees"><i class="fas fa-money-bill-wave"></i> Fees</a></li>
+                        <li><a href="#" class="nav-link" data-module="teachers"><i class="fas fa-chalkboard-teacher"></i> Teachers</a></li>
+                        <li><a href="#" class="nav-link" data-module="notices"><i class="fas fa-bullhorn"></i> Notices</a></li>
+                        <li><a href="#" class="nav-link" data-module="parents"><i class="fas fa-users"></i> Parents</a></li>
+                        <li><a href="#" class="nav-link" data-module="profile"><i class="fas fa-user"></i> Profile</a></li>
+                    </ul>
+                </nav>
+                <div class="user-info">
+                    <span class="user-name">Admin</span>
+                    <i class="fas fa-user-circle"></i>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Dashboard Module -->
+            <div id="dashboard" class="module active">
+                <div class="module-header">
+                    <h2><i class="fas fa-tachometer-alt"></i> Dashboard</h2>
+                    <p>Overview of school operations and statistics</p>
+                </div>
+                
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-user-graduate"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3 id="total-students">0</h3>
+                            <p>Total Students</p>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-chalkboard-teacher"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3 id="total-teachers">0</h3>
+                            <p>Total Teachers</p>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-calendar-check"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3 id="attendance-rate">0%</h3>
+                            <p>Today's Attendance</p>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-money-bill-wave"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3 id="fee-collection">₹0</h3>
+                            <p>Monthly Fee Collection</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="dashboard-grid">
+                    <div class="dashboard-card">
+                        <h3>Recent Activities</h3>
+                        <div class="activity-list">
+                            <div class="activity-item">
+                                <i class="fas fa-user-plus"></i>
+                                <span>New student admitted: John Doe</span>
+                                <small>2 hours ago</small>
+                            </div>
+                            <div class="activity-item">
+                                <i class="fas fa-calendar-check"></i>
+                                <span>Attendance marked for Class 10A</span>
+                                <small>4 hours ago</small>
+                            </div>
+                            <div class="activity-item">
+                                <i class="fas fa-money-bill-wave"></i>
+                                <span>Fee payment received from 15 students</span>
+                                <small>1 day ago</small>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="dashboard-card">
+                        <h3>Quick Actions</h3>
+                        <div class="quick-actions">
+                            <button class="action-btn" onclick="showModule('students')">
+                                <i class="fas fa-user-plus"></i>
+                                Add Student
+                            </button>
+                            <button class="action-btn" onclick="showModule('attendance')">
+                                <i class="fas fa-calendar-check"></i>
+                                Mark Attendance
+                            </button>
+                            <button class="action-btn" onclick="showModule('fees')">
+                                <i class="fas fa-money-bill-wave"></i>
+                                Collect Fees
+                            </button>
+                            <button class="action-btn" onclick="showModule('notices')">
+                                <i class="fas fa-bullhorn"></i>
+                                Send Notice
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Profile Module -->
+            <div id="profile" class="module">
+                <div class="module-header">
+                    <h2><i class="fas fa-user"></i> Your Profile</h2>
+                    <div class="header-actions">
+                        <button class="btn btn-primary" onclick="goToEditProfile()">
+                            <i class="fas fa-edit"></i> Edit Profile
+                        </button>
+                        <button class="btn btn-secondary" onclick="goToChangePassword()">
+                            <i class="fas fa-key"></i> Change Password
+                        </button>
+                    </div>
+                </div>
+                <div class="module-content">
+                    <div class="tabs">
+                        <button class="tab-btn active" onclick="showTab('profile-overview-tab', this)">Overview</button>
+                        <button class="tab-btn" onclick="showTab('profile-edit-tab', this)">Edit Profile</button>
+                        <button class="tab-btn" onclick="showTab('profile-password-tab', this)">Change Password</button>
+                    </div>
+
+                    <div id="profile-overview-tab" class="tab-content active">
+                        <div class="table-container">
+                            <table class="data-table">
+                                <tbody>
+                                    <tr><th style="width:280px">Name</th><td id="profile-overview-name"></td></tr>
+                                    <tr><th>Email</th><td id="profile-overview-email"></td></tr>
+                                    <tr><th>Role</th><td id="profile-overview-role"></td></tr>
+                                    <tr><th>Phone</th><td id="profile-overview-phone"></td></tr>
+                                    <tr><th>Gender</th><td id="profile-overview-gender"></td></tr>
+                                    <tr><th>Date of Birth</th><td id="profile-overview-dob"></td></tr>
+                                    <tr><th>Joined</th><td id="profile-overview-joined"></td></tr>
+                                    <tr><th>Last Login</th><td id="profile-overview-lastlogin"></td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div id="profile-edit-tab" class="tab-content">
+                        <form id="profile-edit-form" onsubmit="updateProfile(event)">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="profile-name">Full Name *</label>
+                                    <input type="text" id="profile-name" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="profile-email">Email (cannot change)</label>
+                                    <input type="email" id="profile-email" disabled>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="profile-phone">Phone *</label>
+                                    <input type="tel" id="profile-phone" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="profile-role">Role</label>
+                                    <input type="text" id="profile-role" disabled>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="profile-gender">Gender</label>
+                                    <select id="profile-gender">
+                                        <option value="">Select Gender</option>
+                                        <option value="Male">Male</option>
+                                        <option value="Female">Female</option>
+                                        <option value="Other">Other</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="profile-dob">Date of Birth</label>
+                                    <input type="date" id="profile-dob">
+                                </div>
+                            </div>
+                            <div class="form-actions">
+                                <button type="submit" class="btn btn-primary">Save Changes</button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div id="profile-password-tab" class="tab-content">
+                        <form id="profile-password-form" onsubmit="changePassword(event)">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="current-password">Current Password *</label>
+                                    <input type="password" id="current-password" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="new-password">New Password *</label>
+                                    <input type="password" id="new-password" minlength="6" required>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="confirm-password">Confirm New Password *</label>
+                                    <input type="password" id="confirm-password" minlength="6" required>
+                                </div>
+                            </div>
+                            <div class="form-actions">
+                                <button type="submit" class="btn btn-primary">Update Password</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Students Module -->
+            <div id="students" class="module">
+                <div class="module-header">
+                    <h2><i class="fas fa-user-graduate"></i> Student Management</h2>
+                    <button class="btn btn-primary" onclick="showAddStudentForm()">
+                        <i class="fas fa-plus"></i> Add New Student
+                    </button>
+                </div>
+                
+                <div class="module-content">
+                    <div class="search-bar">
+                        <input type="text" id="student-search" placeholder="Search students..." onkeyup="searchStudents()">
+                        <i class="fas fa-search"></i>
+                    </div>
+                    
+                    <div class="table-container">
+                        <table class="data-table" id="students-table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Name</th>
+                                    <th>Class</th>
+                                    <th>Guardian</th>
+                                    <th>Phone</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="students-tbody">
+                                <!-- Student data will be populated here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Add Fee Structure Form Modal -->
+            <div id="add-fee-modal" class="modal">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3>Add Fee Structure</h3>
+                        <span class="close" onclick="closeModal('add-fee-modal')">&times;</span>
+                    </div>
+                    <form id="add-fee-form" onsubmit="addFeeStructure(event)">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="fee-class">Class *</label>
+                                <select id="fee-class" required>
+                                    <option value="">Select Class</option>
+                                    <option value="Nursery">Nursery</option>
+                                    <option value="LKG">LKG</option>
+                                    <option value="UKG">UKG</option>
+                                    <option value="1">Class 1</option>
+                                    <option value="2">Class 2</option>
+                                    <option value="3">Class 3</option>
+                                    <option value="4">Class 4</option>
+                                    <option value="5">Class 5</option>
+                                    <option value="6">Class 6</option>
+                                    <option value="7">Class 7</option>
+                                    <option value="8">Class 8</option>
+                                    <option value="9">Class 9</option>
+                                    <option value="10">Class 10</option>
+                                    <option value="11">Class 11</option>
+                                    <option value="12">Class 12</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="fee-type">Fee Type *</label>
+                                <select id="fee-type" required>
+                                    <option value="">Select Fee Type</option>
+                                    <option value="Monthly Tuition">Monthly Tuition</option>
+                                    <option value="Annual Fee">Annual Fee</option>
+                                    <option value="Library Fee">Library Fee</option>
+                                    <option value="Sports Fee">Sports Fee</option>
+                                    <option value="Transport Fee">Transport Fee</option>
+                                    <option value="Examination Fee">Examination Fee</option>
+                                    <option value="Development Fee">Development Fee</option>
+                                    <option value="Lab Fee">Lab Fee</option>
+                                    <option value="Computer Fee">Computer Fee</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="fee-amount">Amount (₹) *</label>
+                                <input type="number" id="fee-amount" min="0" step="0.01" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="fee-due-date">Due Date *</label>
+                                <input type="date" id="fee-due-date" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="fee-frequency">Frequency</label>
+                                <select id="fee-frequency">
+                                    <option value="Monthly">Monthly</option>
+                                    <option value="Quarterly">Quarterly</option>
+                                    <option value="Half-Yearly">Half-Yearly</option>
+                                    <option value="Annually">Annually</option>
+                                    <option value="One-Time">One-Time</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="fee-status">Status</label>
+                                <select id="fee-status">
+                                    <option value="Active">Active</option>
+                                    <option value="Inactive">Inactive</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="fee-description">Description</label>
+                            <textarea id="fee-description" rows="3" placeholder="Additional details about this fee structure..."></textarea>
+                        </div>
+                        
+                        <div class="form-actions">
+                            <button type="button" class="btn btn-secondary" onclick="closeModal('add-fee-modal')">Cancel</button>
+                            <button type="submit" class="btn btn-primary">Add Fee Structure</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Add Fee Payment Modal -->
+            <div id="add-payment-modal" class="modal">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3>Record Fee Payment</h3>
+                        <span class="close" onclick="closeModal('add-payment-modal')">&times;</span>
+                    </div>
+                    <form id="add-payment-form" onsubmit="recordFeePayment(event)">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="payment-student">Student *</label>
+                                <select id="payment-student" required onchange="loadStudentFees()">
+                                    <option value="">Select Student</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="payment-fee-type">Fee Type *</label>
+                                <select id="payment-fee-type" required>
+                                    <option value="">Select Fee Type</option>
+                                    <option value="">1 th</option>
+                                    <option value="">Select Fee Type</option>
+                                    <option value="">Select Fee Type</option>
+                                    <option value="">Select Fee Type</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="payment-amount">Amount Paid (₹) *</label>
+                                <input type="number" id="payment-amount" min="0" step="0.01" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="payment-date">Payment Date *</label>
+                                <input type="date" id="payment-date" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="payment-method">Payment Method *</label>
+                                <select id="payment-method" required>
+                                    <option value="">Select Method</option>
+                                    <option value="Cash">Cash</option>
+                                    <option value="Cheque">Cheque</option>
+                                    <option value="Online Transfer">Online Transfer</option>
+                                    <option value="UPI">UPI</option>
+                                    <option value="Card">Card</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="payment-reference">Reference Number</label>
+                                <input type="text" id="payment-reference" placeholder="Cheque number, transaction ID, etc.">
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="payment-remarks">Remarks</label>
+                            <textarea id="payment-remarks" rows="3" placeholder="Additional notes about this payment..."></textarea>
+                        </div>
+                        
+                        <div class="form-actions">
+                            <button type="button" class="btn btn-secondary" onclick="closeModal('add-payment-modal')">Cancel</button>
+                            <button type="submit" class="btn btn-primary">Record Payment</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Send Notice Modal -->
+            <div id="send-notice-modal" class="modal">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3>Send Notice</h3>
+                        <span class="close" onclick="closeModal('send-notice-modal')">&times;</span>
+                    </div>
+                    <form id="send-notice-form" onsubmit="sendNotice(event)">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="notice-title">Notice Title *</label>
+                                <input type="text" id="notice-title" required placeholder="Enter notice title...">
+                            </div>
+                            <div class="form-group">
+                                <label for="notice-type">Notice Type *</label>
+                                <select id="notice-type" required>
+                                    <option value="">Select Type</option>
+                                    <option value="General">General</option>
+                                    <option value="Academic">Academic</option>
+                                    <option value="Holiday">Holiday</option>
+                                    <option value="Examination">Examination</option>
+                                    <option value="Sports">Sports</option>
+                                    <option value="Cultural">Cultural</option>
+                                    <option value="Transport">Transport</option>
+                                    <option value="Fee">Fee Related</option>
+                                    <option value="Emergency">Emergency</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="notice-priority">Priority</label>
+                                <select id="notice-priority">
+                                    <option value="Normal">Normal</option>
+                                    <option value="High">High</option>
+                                    <option value="Urgent">Urgent</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="notice-date">Notice Date *</label>
+                                <input type="date" id="notice-date" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="notice-recipients">Recipients *</label>
+                            <div class="recipients-selection">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" id="recipient-all" onchange="toggleAllRecipients()"> All Students & Parents
+                                </label>
+                                <label class="checkbox-label">
+                                    <input type="checkbox" id="recipient-teachers" onchange="updateRecipients()"> All Teachers
+                                </label>
+                                <label class="checkbox-label">
+                                    <input type="checkbox" id="recipient-specific-class" onchange="toggleSpecificClass()"> Specific Class
+                                </label>
+                                <div id="specific-class-selection" style="display: none; margin-top: 10px;">
+                                    <select id="notice-class" onchange="updateRecipients()">
+                                        <option value="">Select Class</option>
+                                    </select>
+                                    <select id="notice-section" onchange="updateRecipients()">
+                                        <option value="">Select Section</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="notice-content">Notice Content *</label>
+                            <textarea id="notice-content" rows="8" required placeholder="Enter the notice content here..."></textarea>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="notice-attachments">Attachments</label>
+                                <input type="file" id="notice-attachments" multiple accept=".pdf,.doc,.docx,.jpg,.jpeg,.png">
+                                <small>Supported formats: PDF, DOC, DOCX, JPG, PNG (Max 5MB each)</small>
+                            </div>
+                            <div class="form-group">
+                                <label for="notice-contacts-file">Upload Contacts (CSV / Excel)</label>
+                                <input type="file" id="notice-contacts-file" accept=".csv,.xlsx,.xls">
+                                <small>Upload a CSV or Excel file containing parent contact numbers. CSV is recommended. The script will extract any column named "phone", "mobile", or "contact" if present; otherwise it will try to detect numeric fields.</small>
+                            </div>
+                            <div class="form-group">
+                                <label for="notice-validity">Valid Until</label>
+                                <input type="date" id="notice-validity">
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="notice-send-method">Send Method</label>
+                                <div class="send-methods">
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" id="send-email" checked> Email
+                                    </label>
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" id="send-sms"> SMS
+                                    </label>
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" id="send-whatsapp"> WhatsApp
+                                    </label>
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" id="send-portal" checked> School Portal
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="notice-reminder">Send Reminder</label>
+                                <select id="notice-reminder">
+                                    <option value="none">No Reminder</option>
+                                    <option value="1day">1 Day Before</option>
+                                    <option value="3days">3 Days Before</option>
+                                    <option value="1week">1 Week Before</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="form-actions">
+                            <button type="button" class="btn btn-secondary" onclick="closeModal('send-notice-modal')">Cancel</button>
+                            <button type="button" class="btn btn-warning" onclick="previewNotice()">
+                                <i class="fas fa-eye"></i> Preview
+                            </button>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-paper-plane"></i> Send Notice
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Notice Preview Modal -->
+            <div id="notice-preview-modal" class="modal">
+                <div class="modal-content" style="max-width: 800px;">
+                    <div class="modal-header">
+                        <h3>Notice Preview</h3>
+                        <span class="close" onclick="closeModal('notice-preview-modal')">&times;</span>
+                    </div>
+                    <div id="notice-preview-content" style="padding: 2rem;">
+                        <!-- Preview content will be generated here -->
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-secondary" onclick="closeModal('notice-preview-modal')">Close</button>
+                        <button type="button" class="btn btn-primary" onclick="sendNoticeFromPreview()">
+                            <i class="fas fa-paper-plane"></i> Send Notice
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Add Class Modal -->
+            <div id="add-class-modal" class="modal">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3>Add New Class</h3>
+                        <span class="close" onclick="closeModal('add-class-modal')">&times;</span>
+                    </div>
+                    <form id="add-class-form" onsubmit="addClass(event)">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="class-name">Class Name *</label>
+                                <select id="class-name" required onchange="updateClassDetails()">
+                                    <option value="">Select Class</option>
+                                    <option value="Nursery">Nursery</option>
+                                    <option value="LKG">LKG</option>
+                                    <option value="UKG">UKG</option>
+                                    <option value="1">Class 1</option>
+                                    <option value="2">Class 2</option>
+                                    <option value="3">Class 3</option>
+                                    <option value="4">Class 4</option>
+                                    <option value="5">Class 5</option>
+                                    <option value="6">Class 6</option>
+                                    <option value="7">Class 7</option>
+                                    <option value="8">Class 8</option>
+                                    <option value="9">Class 9</option>
+                                    <option value="10">Class 10</option>
+                                    <option value="11">Class 11</option>
+                                    <option value="12">Class 12</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="class-section">Section *</label>
+                                <select id="class-section" required>
+                                    <option value="">Select Section</option>
+                                    <option value="A">A</option>
+                                    <option value="B">B</option>
+                                    <option value="C">C</option>
+                                    <option value="D">D</option>
+                                    <option value="E">E</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="class-teacher">Class Teacher *</label>
+                                <select id="class-teacher" required>
+                                    <option value="">Select Class Teacher</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="class-room">Room Number *</label>
+                                <input type="text" id="class-room" required placeholder="e.g., Room 101">
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="class-strength">Maximum Strength</label>
+                                <input type="number" id="class-strength" min="1" max="60" value="40" placeholder="40">
+                            </div>
+                            <div class="form-group">
+                                <label for="class-floor">Floor</label>
+                                <select id="class-floor">
+                                    <option value="">Select Floor</option>
+                                    <option value="Ground Floor">Ground Floor</option>
+                                    <option value="1st Floor">1st Floor</option>
+                                    <option value="2nd Floor">2nd Floor</option>
+                                    <option value="3rd Floor">3rd Floor</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="class-start-time">Start Time</label>
+                                <input type="time" id="class-start-time" value="08:00">
+                            </div>
+                            <div class="form-group">
+                                <label for="class-end-time">End Time</label>
+                                <input type="time" id="class-end-time" value="14:00">
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="class-subjects">Subjects</label>
+                            <div class="subjects-selection">
+                                <div class="subject-checkboxes">
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" value="Mathematics" class="subject-checkbox"> Mathematics
+                                    </label>
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" value="Science" class="subject-checkbox"> Science
+                                    </label>
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" value="English" class="subject-checkbox"> English
+                                    </label>
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" value="Hindi" class="subject-checkbox"> Hindi
+                                    </label>
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" value="Social Studies" class="subject-checkbox"> Social Studies
+                                    </label>
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" value="Physics" class="subject-checkbox"> Physics
+                                    </label>
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" value="Chemistry" class="subject-checkbox"> Chemistry
+                                    </label>
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" value="Biology" class="subject-checkbox"> Biology
+                                    </label>
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" value="Computer Science" class="subject-checkbox"> Computer Science
+                                    </label>
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" value="Physical Education" class="subject-checkbox"> Physical Education
+                                    </label>
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" value="Art" class="subject-checkbox"> Art
+                                    </label>
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" value="Music" class="subject-checkbox"> Music
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="class-description">Description</label>
+                            <textarea id="class-description" rows="3" placeholder="Additional information about this class..."></textarea>
+                        </div>
+                        
+                        <div class="form-actions">
+                            <button type="button" class="btn btn-secondary" onclick="closeModal('add-class-modal')">Cancel</button>
+                            <button type="submit" class="btn btn-primary">Add Class</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Add Exam Modal -->
+            <div id="add-exam-modal" class="modal">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3>Add New Exam</h3>
+                        <span class="close" onclick="closeModal('add-exam-modal')">&times;</span>
+                    </div>
+                    <form id="add-exam-form" onsubmit="addExam(event)">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="exam-name">Exam Name *</label>
+                                <input type="text" id="exam-name" required placeholder="e.g., Mid-Term Exam, Unit Test 1">
+                            </div>
+                            <div class="form-group">
+                                <label for="exam-type">Exam Type *</label>
+                                <select id="exam-type" required>
+                                    <option value="">Select Exam Type</option>
+                                    <option value="Unit Test">Unit Test</option>
+                                    <option value="Monthly Test">Monthly Test</option>
+                                    <option value="Quarterly Exam">Quarterly Exam</option>
+                                    <option value="Half-Yearly Exam">Half-Yearly Exam</option>
+                                    <option value="Annual Exam">Annual Exam</option>
+                                    <option value="Pre-Board">Pre-Board</option>
+                                    <option value="Board Exam">Board Exam</option>
+                                    <option value="Practice Test">Practice Test</option>
+                                    <option value="Revision Test">Revision Test</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="exam-class">Class *</label>
+                                <select id="exam-class" required onchange="loadClassSubjects()">
+                                    <option value="">Select Class</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="exam-subject">Subject *</label>
+                                <select id="exam-subject" required>
+                                    <option value="">Select Subject</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="exam-date">Exam Date *</label>
+                                <input type="date" id="exam-date" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="exam-time">Exam Time</label>
+                                <input type="time" id="exam-time" value="09:00">
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="exam-duration">Duration (Minutes)</label>
+                                <input type="number" id="exam-duration" min="30" max="180" value="120" placeholder="120">
+                            </div>
+                            <div class="form-group">
+                                <label for="exam-total-marks">Total Marks *</label>
+                                <input type="number" id="exam-total-marks" min="1" max="100" required placeholder="100">
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="exam-pass-marks">Passing Marks</label>
+                                <input type="number" id="exam-pass-marks" min="0" placeholder="33">
+                            </div>
+                            <div class="form-group">
+                                <label for="exam-room">Exam Hall/Room</label>
+                                <input type="text" id="exam-room" placeholder="e.g., Hall A, Room 101">
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="exam-syllabus">Syllabus/Topics</label>
+                                <textarea id="exam-syllabus" rows="3" placeholder="List the topics or chapters covered in this exam..."></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="exam-instructions">Instructions</label>
+                                <textarea id="exam-instructions" rows="3" placeholder="Special instructions for students..."></textarea>
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="exam-status">Status</label>
+                                <select id="exam-status">
+                                    <option value="Scheduled">Scheduled</option>
+                                    <option value="Ongoing">Ongoing</option>
+                                    <option value="Completed">Completed</option>
+                                    <option value="Cancelled">Cancelled</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="exam-weightage">Weightage (%)</label>
+                                <input type="number" id="exam-weightage" min="0" max="100" placeholder="20">
+                            </div>
+                        </div>
+                        
+                        <div class="form-actions">
+                            <button type="button" class="btn btn-secondary" onclick="closeModal('add-exam-modal')">Cancel</button>
+                            <button type="submit" class="btn btn-primary">Add Exam</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Add Teacher Modal -->
+            <div id="add-teacher-modal" class="modal">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3>Add New Teacher</h3>
+                        <span class="close" onclick="closeModal('add-teacher-modal')">&times;</span>
+                    </div>
+                    <form id="add-teacher-form" onsubmit="addTeacher(event)">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="teacher-name">Full Name *</label>
+                                <input type="text" id="teacher-name" required placeholder="Enter full name...">
+                            </div>
+                            <div class="form-group">
+                                <label for="teacher-email">Email Address *</label>
+                                <input type="email" id="teacher-email" required placeholder="teacher@school.com">
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="teacher-phone">Phone Number *</label>
+                                <input type="tel" id="teacher-phone" required placeholder="9876543210">
+                            </div>
+                            <div class="form-group">
+                                <label for="teacher-gender">Gender</label>
+                                <select id="teacher-gender">
+                                    <option value="">Select Gender</option>
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="teacher-dob">Date of Birth</label>
+                                <input type="date" id="teacher-dob">
+                            </div>
+                            <div class="form-group">
+                                <label for="teacher-joining-date">Joining Date *</label>
+                                <input type="date" id="teacher-joining-date" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="teacher-subject">Primary Subject *</label>
+                                <select id="teacher-subject" required>
+                                    <option value="">Select Primary Subject</option>
+                                    <option value="Mathematics">Mathematics</option>
+                                    <option value="Science">Science</option>
+                                    <option value="English">English</option>
+                                    <option value="Hindi">Hindi</option>
+                                    <option value="Social Studies">Social Studies</option>
+                                    <option value="Physics">Physics</option>
+                                    <option value="Chemistry">Chemistry</option>
+                                    <option value="Biology">Biology</option>
+                                    <option value="Computer Science">Computer Science</option>
+                                    <option value="Physical Education">Physical Education</option>
+                                    <option value="Art">Art</option>
+                                    <option value="Music">Music</option>
+                                    <option value="Economics">Economics</option>
+                                    <option value="Commerce">Commerce</option>
+                                    <option value="History">History</option>
+                                    <option value="Geography">Geography</option>
+                                    <option value="Political Science">Political Science</option>
+                                    <option value="Psychology">Psychology</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="teacher-qualification">Highest Qualification *</label>
+                                <select id="teacher-qualification" required>
+                                    <option value="">Select Qualification</option>
+                                    <option value="B.Ed">B.Ed</option>
+                                    <option value="M.Ed">M.Ed</option>
+                                    <option value="B.Sc">B.Sc</option>
+                                    <option value="M.Sc">M.Sc</option>
+                                    <option value="B.A">B.A</option>
+                                    <option value="M.A">M.A</option>
+                                    <option value="B.Com">B.Com</option>
+                                    <option value="M.Com">M.Com</option>
+                                    <option value="B.Tech">B.Tech</option>
+                                    <option value="M.Tech">M.Tech</option>
+                                    <option value="MBA">MBA</option>
+                                    <option value="Ph.D">Ph.D</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="teacher-experience">Years of Experience</label>
+                                <input type="number" id="teacher-experience" min="0" max="50" placeholder="0">
+                            </div>
+                            <div class="form-group">
+                                <label for="teacher-salary">Monthly Salary (₹)</label>
+                                <input type="number" id="teacher-salary" min="0" step="100" placeholder="30000">
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="teacher-classes">Assigned Classes</label>
+                            <div class="subjects-selection">
+                                <div class="subject-checkboxes">
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" value="Nursery" class="class-checkbox"> Nursery
+                                    </label>
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" value="LKG" class="class-checkbox"> LKG
+                                    </label>
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" value="UKG" class="class-checkbox"> UKG
+                                    </label>
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" value="1" class="class-checkbox"> Class 1
+                                    </label>
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" value="2" class="class-checkbox"> Class 2
+                                    </label>
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" value="3" class="class-checkbox"> Class 3
+                                    </label>
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" value="4" class="class-checkbox"> Class 4
+                                    </label>
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" value="5" class="class-checkbox"> Class 5
+                                    </label>
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" value="6" class="class-checkbox"> Class 6
+                                    </label>
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" value="7" class="class-checkbox"> Class 7
+                                    </label>
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" value="8" class="class-checkbox"> Class 8
+                                    </label>
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" value="9" class="class-checkbox"> Class 9
+                                    </label>
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" value="10" class="class-checkbox"> Class 10
+                                    </label>
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" value="11" class="class-checkbox"> Class 11
+                                    </label>
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" value="12" class="class-checkbox"> Class 12
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="teacher-address">Address</label>
+                                <textarea id="teacher-address" rows="3" placeholder="Enter complete address..."></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="teacher-emergency-contact">Emergency Contact</label>
+                                <input type="tel" id="teacher-emergency-contact" placeholder="Emergency contact number">
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="teacher-designation">Designation</label>
+                                <select id="teacher-designation">
+                                    <option value="">Select Designation</option>
+                                    <option value="Teacher">Teacher</option>
+                                    <option value="Senior Teacher">Senior Teacher</option>
+                                    <option value="Head of Department">Head of Department</option>
+                                    <option value="Vice Principal">Vice Principal</option>
+                                    <option value="Principal">Principal</option>
+                                    <option value="Coordinator">Coordinator</option>
+                                    <option value="Librarian">Librarian</option>
+                                    <option value="Counsellor">Counsellor</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="teacher-status">Employment Status</label>
+                                <select id="teacher-status">
+                                    <option value="Active">Active</option>
+                                    <option value="On Leave">On Leave</option>
+                                    <option value="Resigned">Resigned</option>
+                                    <option value="Terminated">Terminated</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="form-actions">
+                            <button type="button" class="btn btn-secondary" onclick="closeModal('add-teacher-modal')">Cancel</button>
+                            <button type="submit" class="btn btn-primary">Add Teacher</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Add Student Form Modal -->
+            <div id="add-student-modal" class="modal">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3>Add New Student</h3>
+                        <span class="close" onclick="closeModal('add-student-modal')">&times;</span>
+                    </div>
+                    <form id="add-student-form" onsubmit="addStudent(event)">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="student-name">Student Name *</label>
+                                <input type="text" id="student-name" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="student-class">Class *</label>
+                                <select id="student-class" required>
+                                    <option value="">Select Class</option>
+                                    <option value="Nursery">Nursery</option>
+                                    <option value="LKG">LKG</option>
+                                    <option value="UKG">UKG</option>
+                                    <option value="1">Class 1</option>
+                                    <option value="2">Class 2</option>
+                                    <option value="3">Class 3</option>
+                                    <option value="4">Class 4</option>
+                                    <option value="5">Class 5</option>
+                                    <option value="6">Class 6</option>
+                                    <option value="7">Class 7</option>
+                                    <option value="8">Class 8</option>
+                                    <option value="9">Class 9</option>
+                                    <option value="10">Class 10</option>
+                                    <option value="11">Class 11</option>
+                                    <option value="12">Class 12</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="student-section">Section</label>
+                                <input type="text" id="student-section" placeholder="e.g., A, B, C">
+                            </div>
+                            <div class="form-group">
+                                <label for="student-roll">Roll Number</label>
+                                <input type="text" id="student-roll">
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="student-dob">Date of Birth</label>
+                                <input type="date" id="student-dob">
+                            </div>
+                            <div class="form-group">
+                                <label for="student-gender">Gender</label>
+                                <select id="student-gender">
+                                    <option value="">Select Gender</option>
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="student-address">Address</label>
+                            <textarea id="student-address" rows="3"></textarea>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="guardian-name">Guardian Name *</label>
+                                <input type="text" id="guardian-name" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="guardian-relation">Relation</label>
+                                <select id="guardian-relation">
+                                    <option value="">Select Relation</option>
+                                    <option value="Father">Father</option>
+                                    <option value="Mother">Mother</option>
+                                    <option value="Guardian">Guardian</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="guardian-phone">Guardian Phone *</label>
+                                <input type="tel" id="guardian-phone" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="guardian-email">Guardian Email</label>
+                                <input type="email" id="guardian-email">
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="previous-school">Previous School</label>
+                                <input type="text" id="previous-school">
+                            </div>
+                            <div class="form-group">
+                                <label for="admission-date">Admission Date</label>
+                                <input type="date" id="admission-date">
+                            </div>
+                        </div>
+                        
+                        <div class="form-actions">
+                            <button type="button" class="btn btn-secondary" onclick="closeModal('add-student-modal')">Cancel</button>
+                            <button type="submit" class="btn btn-primary">Add Student</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Classes Module -->
+            <div id="classes" class="module">
+                <div class="module-header">
+                    <h2><i class="fas fa-chalkboard-teacher"></i> Classes & Timetable</h2>
+                    <button class="btn btn-primary" onclick="showAddClassForm()">
+                        <i class="fas fa-plus"></i> Add New Class
+                    </button>
+                </div>
+                
+                <div class="module-content">
+                    <div class="tabs">
+                        <button class="tab-btn active" onclick="showTab('classes-tab', this)">Classes</button>
+                        <button class="tab-btn" onclick="showTab('timetable-tab', this)">Timetable</button>
+                    </div>
+                    
+                    <div id="classes-tab" class="tab-content active">
+                        <div class="table-container">
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>Class & Section</th>
+                                        <th>Class Teacher</th>
+                                        <th>Room & Floor</th>
+                                        <th>Students</th>
+                                        <th>Timing</th>
+                                        <th>Subjects</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="classes-tbody">
+                                    <!-- Class data will be populated here -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    
+                    <div id="timetable-tab" class="tab-content">
+                        <div class="timetable-container">
+                            <div class="timetable-header">
+                                <select id="class-select" onchange="loadTimetable()">
+                                    <option value="">Select Class</option>
+                                </select>
+                                <button class="btn btn-primary" onclick="showAddTimetableForm()">
+                                    <i class="fas fa-plus"></i> Add Timetable
+                                </button>
+                            </div>
+                            <div class="timetable-grid" id="timetable-grid">
+                                <!-- Timetable will be generated here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Attendance Module -->
+            <div id="attendance" class="module">
+                <div class="module-header">
+                    <h2><i class="fas fa-calendar-check"></i> Attendance Management</h2>
+                </div>
+                
+                <div class="module-content">
+                    <div class="attendance-filters">
+                        <select id="attendance-class" onchange="loadAttendanceStudents()">
+                            <option value="">Select Class</option>
+                        </select>
+                        <select id="attendance-section">
+                            <option value="">Select Section</option>
+                        </select>
+                        <input type="date" id="attendance-date" onchange="loadAttendanceStudents()">
+                        <button class="btn btn-primary" onclick="markAttendance()">
+                            <i class="fas fa-check"></i> Mark Attendance
+                        </button>
+                    </div>
+                    
+                    <div class="table-container">
+                        <table class="data-table" id="attendance-table">
+                            <thead>
+                                <tr>
+                                    <th>Roll No.</th>
+                                    <th>Name</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="attendance-tbody">
+                                <!-- Attendance data will be populated here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Exams Module -->
+            <div id="exams" class="module">
+                <div class="module-header">
+                    <h2><i class="fas fa-file-alt"></i> Exams & Reports</h2>
+                    <button class="btn btn-primary" onclick="showAddExamForm()">
+                        <i class="fas fa-plus"></i> Add Exam
+                    </button>
+                </div>
+                
+                <div class="module-content">
+                    <div class="tabs">
+                        <button class="tab-btn active" onclick="showTab('exams-tab', this)">Exams</button>
+                        <button class="tab-btn" onclick="showTab('results-tab', this)">Results</button>
+                        <button class="tab-btn" onclick="showTab('reports-tab', this)">Reports</button>
+                    </div>
+                    
+                    <div id="exams-tab" class="tab-content active">
+                        <div class="table-container">
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>Exam Name</th>
+                                        <th>Type</th>
+                                        <th>Class</th>
+                                        <th>Subject</th>
+                                        <th>Date & Time</th>
+                                        <th>Marks</th>
+                                        <th>Status</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="exams-tbody">
+                                    <!-- Exam data will be populated here -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    
+                    <div id="results-tab" class="tab-content">
+                        <div class="results-filters">
+                            <select id="results-class">
+                                <option value="">Select Class</option>
+                            </select>
+                            <select id="results-exam">
+                                <option value="">Select Exam</option>
+                            </select>
+                            <button class="btn btn-primary" onclick="loadResults()">
+                                <i class="fas fa-search"></i> Load Results
+                            </button>
+                        </div>
+                        <div class="table-container">
+                            <table class="data-table" id="results-table">
+                                <thead>
+                                    <tr>
+                                        <th>Roll No.</th>
+                                        <th>Name</th>
+                                        <th>Marks</th>
+                                        <th>Grade</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="results-tbody">
+                                    <!-- Results data will be populated here -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    
+                    <div id="reports-tab" class="tab-content">
+                        <div class="reports-options">
+                            <button class="btn btn-primary" onclick="generateReportCard()">
+                                <i class="fas fa-file-pdf"></i> Generate Report Card
+                            </button>
+                            <button class="btn btn-primary" onclick="generateClassReport()">
+                                <i class="fas fa-chart-bar"></i> Class Performance Report
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Fees Module -->
+            <div id="fees" class="module">
+                <div class="module-header">
+                    <h2><i class="fas fa-money-bill-wave"></i> Fee Management</h2>
+                    <div class="header-actions">
+                        <button class="btn btn-primary" onclick="showAddFeeForm()">
+                            <i class="fas fa-plus"></i> Add Fee Structure
+                        </button>
+                        <button class="btn btn-success" onclick="showRecordPaymentForm()">
+                            <i class="fas fa-credit-card"></i> Record Payment
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="module-content">
+                    <div class="tabs">
+                        <button class="tab-btn active" onclick="showTab('fee-structure-tab', this)">Fee Structure</button>
+                        <button class="tab-btn" onclick="showTab('fee-payments-tab', this)">Payments</button>
+                        <button class="tab-btn" onclick="showTab('fee-reports-tab', this)">Reports</button>
+                    </div>
+                    
+                    <div id="fee-structure-tab" class="tab-content active">
+                        <div class="table-container">
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>Class</th>
+                                        <th>Fee Type</th>
+                                        <th>Amount</th>
+                                        <th>Frequency</th>
+                                        <th>Due Date</th>
+                                        <th>Status</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="fee-structure-tbody">
+                                    <!-- Fee structure data will be populated here -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    
+                    <div id="fee-payments-tab" class="tab-content">
+                        <div class="fee-filters">
+                            <select id="fee-class">
+                                <option value="">Select Class</option>
+                            </select>
+                            <select id="fee-month">
+                                <option value="">Select Month</option>
+                            </select>
+                            <button class="btn btn-primary" onclick="loadFeePayments()">
+                                <i class="fas fa-search"></i> Load Payments
+                            </button>
+                        </div>
+                        <div class="table-container">
+                            <table class="data-table" id="fee-payments-table">
+                                <thead>
+                                    <tr>
+                                        <th>Student</th>
+                                        <th>Class</th>
+                                        <th>Amount</th>
+                                        <th>Fee Type</th>
+                                        <th>Payment Date</th>
+                                        <th>Method</th>
+                                        <th>Status</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="fee-payments-tbody">
+                                    <!-- Fee payments data will be populated here -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    
+                    <div id="fee-reports-tab" class="tab-content">
+                        <div class="reports-options">
+                            <button class="btn btn-primary" onclick="generateFeeReport()">
+                                <i class="fas fa-file-pdf"></i> Fee Collection Report
+                            </button>
+                            <button class="btn btn-primary" onclick="generatePendingFeeReport()">
+                                <i class="fas fa-exclamation-triangle"></i> Pending Fees Report
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Teachers Module -->
+            <div id="teachers" class="module">
+                <div class="module-header">
+                    <h2><i class="fas fa-chalkboard-teacher"></i> Teacher Management</h2>
+                    <button class="btn btn-primary" onclick="showAddTeacherForm()">
+                        <i class="fas fa-plus"></i> Add New Teacher
+                    </button>
+                </div>
+                
+                <div class="module-content">
+                    <div class="table-container">
+                        <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>Teacher Details</th>
+                                        <th>Subject & Qualification</th>
+                                        <th>Classes</th>
+                                        <th>Contact</th>
+                                        <th>Experience</th>
+                                        <th>Salary & Status</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                            <tbody id="teachers-tbody">
+                                <!-- Teacher data will be populated here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Notices Module -->
+            <div id="notices" class="module">
+                <div class="module-header">
+                    <h2><i class="fas fa-bullhorn"></i> Notices & Announcements</h2>
+                    <button class="btn btn-primary" onclick="showSendNoticeForm()">
+                        <i class="fas fa-plus"></i> Send Notice
+                    </button>
+                </div>
+                <div class="module-content">
+                    <div class="table-container">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Title</th>
+                                    <th>Type</th>
+                                    <th>Priority</th>
+                                    <th>Date</th>
+                                    <th>Recipients</th>
+                                    <th>Methods</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="notices-tbody">
+                                <!-- Notices will be populated here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- Parents Module -->
+            <div id="parents" class="module">
+                <div class="module-header">
+                    <h2><i class="fas fa-users"></i> Parents Portal</h2>
+                </div>
+                
+                <div class="module-content">
+                    <div class="tabs">
+                        <button class="tab-btn active" onclick="showTab('parent-login-tab', this)">Login</button>
+                        <button class="tab-btn" onclick="showTab('parent-view-tab', this)">Student Info</button>
+                    </div>
+                    
+                    <div id="parent-login-tab" class="tab-content active">
+                        <div class="login-form">
+                            <h3>Parent Login</h3>
+                            <form onsubmit="parentLogin(event)">
+                                <div class="form-group">
+                                    <label for="parent-username">Username/Phone</label>
+                                    <input type="text" id="parent-username" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="parent-password">Password</label>
+                                    <input type="password" id="parent-password" required>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Login</button>
+                            </form>
+                        </div>
+                    </div>
+                    
+                    <div id="parent-view-tab" class="tab-content">
+                        <div class="parent-dashboard">
+                            <h3>Student Information</h3>
+                            <div id="parent-student-info">
+                                <!-- Student info will be displayed here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div id="app-loading" style="display:none;position:fixed;inset:0;background:rgba(255,255,255,0.6);backdrop-filter:saturate(180%) blur(3px);z-index:2000;align-items:center;justify-content:center;">
+        <div class="loading" style="width:28px;height:28px;border-width:4px"></div>
+        <span style="margin-left:8px;color:#555;font-weight:500;">Loading...</span>
+    </div>
+
+    <script src="auth.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

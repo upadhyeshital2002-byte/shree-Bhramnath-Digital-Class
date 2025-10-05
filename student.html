@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Student Profile</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .profile-container { max-width: 900px; margin: 2rem auto; padding: 1.5rem; background:#fff; border-radius:8px; box-shadow:0 6px 18px rgba(0,0,0,0.05);} 
+        .profile-header { display:flex; gap:1rem; align-items:center; }
+        .profile-avatar { width:90px; height:90px; border-radius:50%; background:linear-gradient(135deg,#667eea,#764ba2); display:flex; align-items:center; justify-content:center; color:white; font-size:2rem; }
+        .profile-title h2 { margin:0; }
+        .profile-actions { margin-left:auto; }
+        .profile-grid { display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin-top:1rem; }
+        .profile-card { background:#fafafa; padding:1rem; border-radius:6px; }
+        .back-btn { margin-bottom:1rem; }
+        @media (max-width:700px) { .profile-grid { grid-template-columns:1fr; } }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <main class="main-content">
+            <div class="profile-container" id="student-profile">
+                <button class="btn back-btn" onclick="goBack()"><i class="fas fa-arrow-left"></i> Back</button>
+                <div class="profile-header">
+                    <div class="profile-avatar" id="avatar">S</div>
+                    <div class="profile-title">
+                        <h2 id="s-name">Student Name</h2>
+                        <div id="s-class" style="color:#6c757d;">Class</div>
+                        <div style="margin-top:0.5rem;color:#6c757d;">Student ID: <span id="s-id"></span></div>
+                    </div>
+                    <div class="profile-actions">
+                        <button class="btn btn-primary" id="print-btn" onclick="window.print()"><i class="fas fa-print"></i> Print</button>
+                    </div>
+                </div>
+
+                <div class="profile-grid">
+                    <div class="profile-card">
+                        <h4>Contact</h4>
+                        <p><strong>Guardian:</strong> <span id="s-guardian"></span></p>
+                        <p><strong>Phone:</strong> <span id="s-phone"></span></p>
+                        <p><strong>Address:</strong> <span id="s-address"></span></p>
+                    </div>
+
+                    <div class="profile-card">
+                        <h4>Academic</h4>
+                        <p><strong>Class & Section:</strong> <span id="s-class-section"></span></p>
+                        <p><strong>Roll Number:</strong> <span id="s-roll"></span></p>
+                        <p><strong>Date of Birth:</strong> <span id="s-dob"></span></p>
+                        <p><strong>Admission Date:</strong> <span id="s-joined"></span></p>
+                    </div>
+                </div>
+
+                <div class="profile-card" style="margin-top:1rem;">
+                    <h4>Additional Information</h4>
+                    <p id="s-remarks"></p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+n    <script>
+        function qs(name) { const params = new URLSearchParams(window.location.search); return params.get(name); }
+        function formatDate(dateString) { if (!dateString) return '—'; const d = new Date(dateString); return d.toLocaleDateString('en-US', { year:'numeric', month:'long', day:'numeric' }); }
+        function goBack() { window.location.href = 'index.html?module=classes'; }
+
+        (function renderStudent(){
+            const id = qs('id');
+            if (!id) { document.getElementById('student-profile').innerHTML = '<p>No student id provided.</p>'; return; }
+            let students = [];
+            try { students = JSON.parse(localStorage.getItem('students') || '[]'); } catch(e) { students = []; }
+            const student = students.find(s => s.id === id || String(s.roll) === id || (s.name && encodeURIComponent(s.name) === id));
+            if (!student) { document.getElementById('student-profile').innerHTML = '<p>Student not found.</p>'; return; }
+
+            document.getElementById('s-name').textContent = student.name || '\u2014';
+            document.getElementById('s-id').textContent = student.id || '\u2014';
+            document.getElementById('avatar').textContent = (student.name || 'S').split(' ').map(s=>s[0]).slice(0,2).join('').toUpperCase();
+            document.getElementById('s-guardian').textContent = student.parentName || '\u2014';
+            document.getElementById('s-phone').textContent = student.phone || '\u2014';
+            document.getElementById('s-address').textContent = student.address || '\u2014';
+            document.getElementById('s-class').textContent = student.class ? `${student.class} ${student.section || ''}` : '\u2014';
+            document.getElementById('s-class-section').textContent = student.class ? `${student.class} ${student.section || ''}` : '\u2014';
+            document.getElementById('s-roll').textContent = student.roll || student.id || '\u2014';
+            document.getElementById('s-dob').textContent = student.dob ? formatDate(student.dob) : '\u2014';
+            document.getElementById('s-joined').textContent = student.admissionDate ? formatDate(student.admissionDate) : (student.createdAt ? formatDate(student.createdAt) : '\u2014');
+            document.getElementById('s-remarks').textContent = student.remarks || '';
+        })();
+    </script>
+</body>
+</html>
